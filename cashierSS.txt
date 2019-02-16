@@ -1,0 +1,35 @@
+// ----------------------------------------------------------------------
+// File name: cashier.cpp
+// Project name: Serendipity
+// ----------------------------------------------------------------------
+// William Duong, wduong1@saddleback.edu
+// CS1B, Ticket #23665
+// Creation Date: 1/21/2019
+// Last Modified: 2/9/2019
+// ----------------------------------------------------------------------
+// Purpose: Cashier module for outputting receipts.
+// ----------------------------------------------------------------------
+// Algorithm: Takes in input for various receipt elements, processes tax, 
+// subtotal, total and COUT receipt.
+// ----------------------------------------------------------------------
+// -			DATA DICTIONARY
+// - CONSTANTS
+// - 
+// - NAME		DATA TYPE	INITIAL VALUE
+// - --------		-------------	-------------
+//   TAX_RATE		double		0.0825
+//
+// - VARIABLES
+// -
+// - NAME		DATA TYPE	INITIAL VALUE
+// - --------		-------------	-------------
+//   isbnValue []  	string
+//   titleValue [] 	string
+//   qtyValue []   	int
+//   priceValue [] 	double
+//   subtotalValue [] 	double
+//   taxValue		double          0
+//   totalValue		double          0
+//   counter    	int             0
+//
+// ----------------------------------------------------------------------
