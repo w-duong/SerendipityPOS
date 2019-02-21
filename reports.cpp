@@ -32,22 +32,22 @@ void reportsMenu ()
     switch (userChoice)
     {
       case 1:
-        listing ();
+        repListing ();
         break;
       case 2:
-        wholesale ();
+        repWholesale ();
         break;
       case 3:
-        retail ();
+        repRetail ();
         break;
       case 4:
-        qtyList ();
+        repQty ();
         break;
       case 5:
-        costList ();
+        repCost ();
         break;
       case 6:
-        ageList ();
+        repAge ();
         break;
     }
   }
@@ -57,7 +57,7 @@ void reportsMenu ()
   }
 }
 
-void listing ()
+void repListing ()
 {
   system ("CLS");
   cout << endl
@@ -66,7 +66,7 @@ void listing ()
   system ("pause");
 }
 
-void wholesale ()
+void repWholesale ()
 {
   system ("CLS");
   cout << endl
@@ -75,7 +75,7 @@ void wholesale ()
   system ("pause");
 }
 
-void retail ()
+void repRetail ()
 {
   system ("CLS");
   cout << endl
@@ -84,7 +84,7 @@ void retail ()
   system ("pause");
 }
 
-void qtyList ()
+void repQty ()
 {
   system ("CLS");
   cout << endl
@@ -93,7 +93,7 @@ void qtyList ()
   system ("pause");
 }
 
-void costList ()
+void repCost ()
 {
   system ("CLS");
   cout << endl
@@ -102,7 +102,7 @@ void costList ()
   system ("pause");
 }
 
-void ageList ()
+void repAge ()
 {
   system ("CLS");
   cout << endl

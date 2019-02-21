@@ -5,21 +5,22 @@
 #include "bookinfo.h"
 #include "reports.h"
 
+string bookTitle [DBSIZE];
+string isbn [DBSIZE];
+string author [DBSIZE];
+string publisher [DBSIZE];
+string dateAdded [DBSIZE];
+int qtyOnHand [DBSIZE];
+double wholesale [DBSIZE];
+double retail [DBSIZE];
+
 int main()
 {
-  const int DBSIZE = 20;
   int bookCount = 0;
 
-  string bookTitle [DBSIZE];
-  string isbn [DBSIZE];
-  string author [DBSIZE];
-  string publisher [DBSIZE];
-  string dateAdded [DBSIZE];
-  int qtyOnHand [DBSIZE];
-  double wholesale [DBSIZE];
-  double retail [DBSIZE];
+  cout << fixed << showpoint << setprecision (2);
 
-  mainMenu ();
+  mainMenu (bookTitle, isbn, author, publisher, dateAdded, qtyOnHand, wholesale, retail, bookCount);
 
   return 0;
 }

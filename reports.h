@@ -8,11 +8,11 @@
 #include "mainmenu.h"
 
 void reportsMenu ();
-void listing ();
-void wholesale ();
-void retail ();
-void qtyList ();
-void costList ();
-void ageList ();
+void repListing ();
+void repWholesale ();
+void repRetail ();
+void repQty ();
+void repCost ();
+void repAge ();
 
 #endif //SERENDIPITY_REPORTS_H

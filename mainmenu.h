@@ -8,9 +8,13 @@
 #include <iomanip>
 #include <iostream>
 #include <stdlib.h>
+#include <string>
+#include <fstream>
 
 using namespace std;
 
-void mainMenu ();
+const int DBSIZE = 20;
+
+void mainMenu (string bookTitle [], string isbn [], string author [], string publisher [], string dateAdded [], int qtyOnHand [], double wholesale [], double retail [], int& bookCount);
 
 #endif //SERENDIPITY_MAINMENU_H
