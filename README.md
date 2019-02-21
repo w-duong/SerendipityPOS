@@ -1,5 +1,5 @@
 # SerendipityPOS
-Point of sale system for booksellers.
+Point of Sale system for booksellers.
 
-# Chapter 7
-- addBook function to main menu.
+# Chapter 8
+- addBook, lookUpBook, editBook, deleteBook functions added to main menu.
