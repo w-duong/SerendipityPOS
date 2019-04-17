@@ -64,5 +64,6 @@ public:
 
 void mainMenu (bookType**);
 void isGoodChoice (int, int, int);
+void systemPause ();
 
 #endif //SERENDIPITY_MAINMENU_H

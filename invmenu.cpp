@@ -11,7 +11,7 @@ void inventoryMenu (bookType **thisArray)
 
   do
   {
-    system ("CLS");
+    system ("clear");
 
     cout << "************************************************************************************" << endl
          << "*                             SERENDIPITY BOOKSELLERS                              *" << endl
@@ -109,7 +109,7 @@ void inventoryMenu (bookType **thisArray)
               cout << endl
                    << "BOOK DELETED" << endl
                    << endl;
-              system ("pause");
+              systemPause ();
             }
            }
          }
@@ -140,7 +140,7 @@ int lookUpBook (bookType **thisArray, int tempArrayIndex [])
   // //VISUAL CHECK:
   // cout << "SEARCH STRING...: " << temp1 << endl;
   //
-  // system ("pause");
+  // systemPause ();
 
   for (int i = 0; i < bookType::getBookCount (); i++)
   {
@@ -161,7 +161,7 @@ int lookUpBook (bookType **thisArray, int tempArrayIndex [])
   {
     cout << "ITEM NOT FOUND!" << endl
          << endl;
-    system ("pause");
+    systemPause ();
   }
   return resultCounter;
 }
@@ -187,13 +187,13 @@ void addBook (bookType **thisArray)
          << "*** ERROR: BOOK DATABASE FULL. CURRENT BOOK COUNT: " << bookType::getBookCount () << " ***" << endl
          << endl
          << "Please delete a book to add more items to database." << endl;
-    system ("pause");
+    systemPause ();
     return;
   }
 
   do
   {
-    system ("CLS");
+    system ("clear");
 
     cout << "************************************************************************************" << endl
          << "*                             SERENDIPITY BOOKSELLERS                              *" << endl
@@ -291,7 +291,7 @@ void bookEdit (bookType **thisArray, int tempArrayIndexVal)
 
   do
   {
-    system ("CLS");
+    system ("clear");
 
     int pos = 0;
     int len = 35;

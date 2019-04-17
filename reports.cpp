@@ -9,7 +9,7 @@ void reportsMenu (bookType **thisArray)
 
   do
   {
-    system ("CLS");
+    system ("clear");
 
     cout << "************************************************************************************" << endl
          << "*                             SERENDIPITY BOOKSELLERS                              *" << endl
@@ -67,7 +67,7 @@ void repListing (bookType **thisArray)
   if (bookType::getBookCount () % 10 > 0)
     totalPageCount += 1;
 
-  system ("CLS");
+  system ("clear");
 
   cout << "************************************************************************************************************************" << endl
        << "*                                                                                                                      *" << endl
@@ -85,9 +85,9 @@ void repListing (bookType **thisArray)
 
     if ((((i + 1) % 10) == 0) && (currentPageCount < totalPageCount))
     {
-      system ("pause");
+      systemPause ();
       currentPageCount++;
-      system ("CLS");
+      system ("clear");
       cout << "************************************************************************************************************************" << endl
            << "*                                                                                                                      *" << endl
            << "*                                                  SERENDIPITY BOOKSELLERS                                             *" << endl
@@ -98,12 +98,12 @@ void repListing (bookType **thisArray)
            << "* --------------------------- ---------- -------------- -------------- ----------  ------- -------------- ------------ *" << endl;
     }
   }
-  system ("pause");
+  systemPause ();
 }
 
 void repWholesale (bookType **thisArray)
 {
-  system ("CLS");
+  system ("clear");
   //////////////////////
   int totalPageCount = 0;
   int currentPageCount = 1;
@@ -129,9 +129,9 @@ void repWholesale (bookType **thisArray)
 
     if ((((i + 1) % 10) == 0) && (currentPageCount < totalPageCount))
     {
-      system ("pause");
+      systemPause ();
       currentPageCount++;
-      system ("CLS");
+      system ("clear");
       cout << "************************************************************************************************************************" << endl
            << "*                                                                                                                      *" << endl
            << "*                                                  SERENDIPITY BOOKSELLERS                                             *" << endl
@@ -148,12 +148,12 @@ void repWholesale (bookType **thisArray)
        << "************************************************************************************************************************" << endl
        << "                                                   TOTAL WHOLESALE COST (ON-HAND INVENTORY): $" << right << setw (14) << totalINVWhole << "           *" << endl;
   //////////////////////
-  system ("pause");
+  systemPause ();
 }
 
 void repRetail (bookType **thisArray)
 {
-  system ("CLS");
+  system ("clear");
   //////////////////////
   int totalPageCount = 0;
   int currentPageCount = 1;
@@ -179,9 +179,9 @@ void repRetail (bookType **thisArray)
 
     if ((((i + 1) % 10) == 0) && (currentPageCount < totalPageCount))
     {
-      system ("pause");
+      systemPause ();
       currentPageCount++;
-      system ("CLS");
+      system ("clear");
       cout << "************************************************************************************************************************" << endl
            << "*                                                                                                                      *" << endl
            << "*                                                  SERENDIPITY BOOKSELLERS                                             *" << endl
@@ -199,32 +199,32 @@ void repRetail (bookType **thisArray)
        << "                                                     TOTAL RETAIL VALUE (ON-HAND INVENTORY): $" << right << setw (14) << totalINVRetail << "           *" << endl;
 
   //////////////////////
-  system ("pause");
+  systemPause ();
 }
 
 void repQty ()
 {
-  system ("CLS");
+  system ("clear");
   cout << endl
        << "PLACEHOLDER FOR LISTING BY QUANTITY"
        << endl;
-  system ("pause");
+  systemPause ();
 }
 
 void repCost ()
 {
-  system ("CLS");
+  system ("clear");
   cout << endl
        << "PLACEHOLDER FOR LISTING BY COST"
        << endl;
-  system ("pause");
+  systemPause ();
 }
 
 void repAge ()
 {
-  system ("CLS");
+  system ("clear");
   cout << endl
        << "PLACEHOLDER FOR LISTING BY AGE"
        << endl;
-  system ("pause");
+  systemPause ();
 }

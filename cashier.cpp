@@ -175,7 +175,7 @@ void cashierMenu (bookType **thisArray)
 
           cout << endl
                << "SALE COMPLETE!" << endl;
-          system ("pause");
+          systemPause ();
           return;
         }
         else {}
@@ -201,7 +201,7 @@ void paintReceipt (bookType **shoppingCart)
 
   const double TAX_RATE = 0.06;
 
-  system ("CLS");
+  system ("clear");
 
   cout << fixed << showpoint << setprecision (2);
 

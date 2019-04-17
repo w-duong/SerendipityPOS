@@ -24,7 +24,7 @@ void mainMenu (bookType **thisArray)
 
   do
   {
-    system ("CLS");
+    system ("clear");
 
     cout << "************************************************************************************" << endl
          << "*                             SERENDIPITY BOOKSELLERS                              *" << endl
@@ -207,7 +207,7 @@ void bookType::printBookInfo () const
   int pos = 0;
   int len = 40;
 
-  system ("CLS");
+  system ("clear");
 
   cout << "************************************************************************************" << endl
        << "*                             SERENDIPITY BOOKSELLERS                              *" << endl
@@ -228,7 +228,7 @@ void bookType::printBookInfo () const
        << "************************************************************************************" << endl
        << endl;
 
-  system ("pause");
+  systemPause ();
 }
 
 bool bookType::isEqual (bookType *otherBook)
@@ -246,8 +246,15 @@ void isGoodChoice (int whateverChoice, int first, int last)
     cout << endl
          << "INVALID INPUT! Please select integer option (" << first << " - " << last << ") " << endl
          << endl;
-    system ("pause");
+    systemPause ();
     cin.clear ();
     cin.ignore (100, '\n');
   }
+}
+
+void systemPause ()
+{
+  char ch;
+  cout << "Please ENTER any key to continue: ";
+  cin >> ch;
 }
