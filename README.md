@@ -1,4 +1,4 @@
-# SerendipityPOS
+# LINUX: SerendipityPOS
 Point of Sale system for booksellers.
 
 # Chapter 8
