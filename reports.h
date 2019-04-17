@@ -7,10 +7,10 @@
 
 #include "mainmenu.h"
 
-void reportsMenu ();
-void repListing ();
-void repWholesale ();
-void repRetail ();
+void reportsMenu (bookType**);
+void repListing (bookType**);
+void repWholesale (bookType**);
+void repRetail (bookType**);
 void repQty ();
 void repCost ();
 void repAge ();
