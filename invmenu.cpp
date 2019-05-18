@@ -1,13 +1,60 @@
+// ----------------------------------------------------------------------
+// File name: invmenu.cpp
+// Project name: Serendipity
+// ----------------------------------------------------------------------
+// William Duong, wduong1@saddleback.edu
+// CS1B
+// Creation Date 1/22/2019
+// Last Modified 5/15/2019
+// ----------------------------------------------------------------------
+// Purpose: Displays inventory menu.
+// ----------------------------------------------------------------------
+// Algorithm: Void display function for inventory menu and various related
+// functions of the inventory module.
+// ----------------------------------------------------------------------
+// -		                      	DATA DICTIONARY
+// - CONSTANTS
+// -
+// - NAME		                    DATA TYPE		             INITIAL VALUE
+// - --------		                -------------		         -------------
 //
-// Created by William Duong on 1/18/2019.
+// - VARIABLES
+// -
+// - NAME		                    DATA TYPE		             INITIAL VALUE
+// - --------		                -------------		         -------------
+// - thisArray                  unorderedLinkedList *
+// - it                         linkedListIterator
+// - tempBookHolder             bookType *
+// - dateTime                   string
+// - userChoice		              int			                 0
+// - editChoice		              char
+// - deleteChoice	              char
+// - searchStr		              string
+// - counterNegative	          int			                 0
+// - editChoice		              int			                 0
+// - tempArrayIndexVal	        int			                 0
+// - deleteChoice	              int			                 0
+// - pos		                    int			                 0
+// - len		                    int			                 30
+// - tempBookTitle	            string			             EMPTY
+// - tempISBN		                string			             EMPTY
+// - tempAuthor		              string			             EMPTY
+// - tempPublisher	            string			             EMPTY
+// - tempDateAdded	            string			             EMPTY
+// - tempQtyOnHand	            int			                 0
+// - tempWholesale	            double			             0
+// - tempRetail		              double			             0
+// - variableStr	              string
 //
-#include "invmenu.h"
-#include "bookinfo.h"
+// ----------------------------------------------------------------------
 
-void inventoryMenu (string bookTitle [], string isbn [], string author [], string publisher [], string dateAdded [], int qtyOnHand [], double wholesale [], double retail [], int& bookCount)
+#include "invmenu.h"
+
+void inventoryMenu (unorderedLinkedList <bookType>* thisArray)
 {
   int userChoice = 0;
   int resultCounter = 0;
+  string dateTime = getDateStr () + " @ " + getTimeStr ();
 
   do
   {
@@ -15,7 +62,9 @@ void inventoryMenu (string bookTitle [], string isbn [], string author [], strin
 
     cout << "************************************************************************************" << endl
          << "*                             SERENDIPITY BOOKSELLERS                              *" << endl
-         << "*                                    MAIN MENU                                     *" << endl
+         << "*                                 INVENTORY MENU                                   *" << endl
+         << "*                                                                                  *" << endl
+         << "*                              " << dateTime << "                              *" << endl
          << "*                                                                                  *" << endl
          << "*  <1> Look Up a Book                                                              *" << endl
          << "*  <2> Add a Book                                                                  *" << endl
@@ -28,90 +77,47 @@ void inventoryMenu (string bookTitle [], string isbn [], string author [], strin
 
     cin >> userChoice;
 
+    isGoodChoice (userChoice, 1, 5);
+
     switch (userChoice)
     {
       case 1:
-        int tempArrayIndex [20];
-        char userChoice1;
-
-        resultCounter = lookUpBook (bookTitle, isbn, author, publisher, dateAdded, qtyOnHand, wholesale, retail, bookCount, tempArrayIndex);
-
-        for (int i = 0; i < resultCounter; i++)
-        {
-          cout << ">>> BOOK LOOK UP <<<" << endl
-               << endl
-               << "RESULT:> " << bookTitle [tempArrayIndex [i]] << endl
-               << "View this book record? (Y/N): ";
-          cin >> userChoice1;
-
-          if (userChoice1 == 'Y' || userChoice1 == 'y')
-          {
-            bookInfo (bookTitle, isbn, author, publisher, dateAdded, qtyOnHand, wholesale, retail, tempArrayIndex [i]);
-          }
-        }
+        lookUpBook (thisArray);
+        // *** IF RETURNING AN ARRAY OF RESULTS (from array database, i.e. NOT linked list) *** //
+        //////////////////////////////////////////////////////////////////////////////////////////
+        // int tempArrayIndex [20];
+        // char userChoice1;
+        //
+        // resultCounter = lookUpBook (thisArray, tempArrayIndex);
+        //
+        // for (int i = 0; i < resultCounter; i++)
+        // {
+        //   cout << ">>> BOOK LOOK UP <<<" << endl
+        //        << endl
+        //        << "RESULT:> " << thisArray [tempArrayIndex [i]] -> getTitle () << endl
+        //        << "View this book record? (Y/N): ";
+        //   cin >> userChoice1;
+        //
+        //   if (userChoice1 == 'Y' || userChoice1 == 'y')
+        //   {
+        //     thisArray [tempArrayIndex [i]] -> printBookInfo ();
+        //     break;
+        //   }
+        // }
+        /////////////////////////////////////////////////////////////////////////////////////////
         break;
       case 2:
-        addBook (bookTitle, isbn, author, publisher, dateAdded, qtyOnHand, wholesale, retail, bookCount);
+        addBook (thisArray);
         break;
       case 3:
-        char editChoice1;
-        char editChoice2;
-
-        resultCounter = lookUpBook (bookTitle, isbn, author, publisher, dateAdded, qtyOnHand, wholesale, retail, bookCount, tempArrayIndex);
-
-        for (int i = 0; i < resultCounter; i++)
-        {
-          cout << ">>> BOOK LOOK UP <<<" << endl
-               << endl
-               << "RESULT:> " << bookTitle [tempArrayIndex [i]] << endl
-               << "View this book record? (Y/N): ";
-          cin >> editChoice1;
-
-          if (editChoice1 == 'Y' || editChoice1 == 'y')
-          {
-            bookInfo (bookTitle, isbn, author, publisher, dateAdded, qtyOnHand, wholesale, retail, tempArrayIndex [i]);
-            cout << endl
-                 << "Do you want to EDIT this book? (Y/N): ";
-            cin >> editChoice2;
-            if (editChoice2 == 'Y' || editChoice2 == 'y')
-            {
-              bookEdit (bookTitle, isbn, author, publisher, dateAdded, qtyOnHand, wholesale, retail, bookCount, tempArrayIndex [i]);
-            }
-          }
-        }
+        lookUpBook (thisArray);
+        bookEdit (thisArray);
         break;
       case 4:
-        char deleteChoice1;
-        char deleteChoice2;
-
-        resultCounter = lookUpBook (bookTitle, isbn, author, publisher, dateAdded, qtyOnHand, wholesale, retail, bookCount, tempArrayIndex);
-
-        for (int i = 0; i < resultCounter; i++)
-        {
-          cout << ">>> BOOK LOOK UP <<<" << endl
-               << endl
-               << "RESULT:> " << bookTitle [tempArrayIndex [i]] << endl
-               << "View this book record? (Y/N): ";
-          cin >> deleteChoice1;
-
-          if (deleteChoice1 == 'Y' || deleteChoice1 == 'y')
-          {
-            bookInfo (bookTitle, isbn, author, publisher, dateAdded, qtyOnHand, wholesale, retail, tempArrayIndex [i]);
-            cout << endl
-                 << "Do you want to DELETE this book? (Y/N): ";
-            cin >> deleteChoice2;
-            if (deleteChoice2 == 'Y' || deleteChoice2 == 'y')
-            {
-              bookDelete (bookTitle, isbn, author, publisher, dateAdded, qtyOnHand, wholesale, retail, bookCount, tempArrayIndex [i]);
-              cout << endl
-                   << "BOOK DELETED" << endl
-                   << endl;
-              system ("pause");
-            }
-           }
-         }
-         break;
-        }
+        lookUpBook (thisArray);
+        bookDelete (thisArray);
+        break;
+    }
   }
   while (userChoice != 5);
   {
@@ -119,51 +125,113 @@ void inventoryMenu (string bookTitle [], string isbn [], string author [], strin
   }
 }
 
-int lookUpBook (const string bookTitle [], const string isbn [], const string author [], const string publisher [], const string dateAdded [], const int qtyOnHand [], const double wholesale [], const double retail [], const int bookCount, int tempArrayIndex [])
+void lookUpBook (unorderedLinkedList <bookType>* thisArray)
 {
+  linkedListIterator <bookType> it;
+  bookType *tempBookHolder = nullptr;
+
+  // *** RESET SEARCH FLAG FOR EVERY NEW SEARCH *** //
+  for (it = thisArray -> begin (); it != thisArray -> end (); ++it)
+  {
+    if ((*it).getSearchFlag () == true)
+    {
+      tempBookHolder = new bookType ((*it));
+    }
+  }
+
+  if (tempBookHolder != nullptr)
+  {
+    thisArray -> deleteNode (*tempBookHolder);
+    tempBookHolder -> setSearchFlag (false);
+    thisArray -> insertLast (*tempBookHolder);
+    tempBookHolder = nullptr;
+  }
+
   string searchStr;
-  string tempArray [20];
   int counterNegative = 0;
-  int resultCounter = 0;
 
   cout << ">>> BOOK LOOK UP <<<" << endl
        << endl
-       << "Search:> " << endl;
+       << "Search:> ";
   cin.ignore ();
   getline (cin, searchStr);
 
+  cout << endl << endl;
+
   string temp1 = toLower (searchStr);
 
-  // //VISUAL CHECK:
-  // cout << "SEARCH STRING...: " << temp1 << endl;
-  //
-  // system ("pause");
-
-  for (int i = 0; i < bookCount; i++)
+  for (it = thisArray -> begin(); it != thisArray -> end(); ++it)
   {
-    string temp2 = toLower (bookTitle [i]);
-    if ((temp2.find (temp1) != string::npos) || (isbn [i].find (searchStr) != string::npos))
+    string temp2 = toLower ((*it).getTitle ());
+    char lookupChoice;
+
+    // *** IF FOUND *** //
+    if ((temp2.find (temp1) != string::npos) || ((*it).getISBN ().find (searchStr) != string::npos))
     {
-      tempArray [resultCounter] = bookTitle [i];
-      tempArrayIndex [resultCounter] = i;
-      resultCounter++;
+      cout << "RESULT => " << endl << endl
+           << (*it) << endl
+           << "Select this book? (Y/N): ";
+      cin >> lookupChoice;
+
+      // *** IF POSITIVE, SET SEARCH FLAG *** //
+      if (lookupChoice == 'Y' || lookupChoice == 'y')
+      {
+        (*it).printBookInfo ();
+        tempBookHolder = new bookType ((*it));
+        break;
+      }
     }
-    if ((temp2.find (temp1) == string::npos) && (isbn [i].find (searchStr) == string::npos))
+
+    // *** IF NOT FOUND *** //
+    if ((temp2.find (temp1) == string::npos) && ((*it).getISBN ().find (searchStr) == string::npos))
     {
       counterNegative++;
     }
   }
 
-  if (counterNegative == bookCount)
+  if (counterNegative == thisArray -> length ())
   {
     cout << "ITEM NOT FOUND!" << endl
          << endl;
     system ("pause");
   }
-  return resultCounter;
+
+  if (tempBookHolder != nullptr)
+  {
+    thisArray -> deleteNode (*tempBookHolder);
+    tempBookHolder -> setSearchFlag (true);
+    thisArray -> insertLast (*tempBookHolder);
+  }
+
+  delete tempBookHolder;
+
+  // *** IF RETURNING AN ARRAY OF RESULTS (from array database, i.e. NOT linked list) *** //
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // for (int i = 0; i < bookType::getBookCount (); i++)
+  // {
+    // string temp2 = toLower (thisArray [i] -> getTitle ());
+    // if ((temp2.find (temp1) != string::npos) || (thisArray [i] -> getISBN ().find (searchStr) != string::npos))
+    // {
+    //   tempArray [resultCounter] = thisArray [i] -> getTitle ();
+    //   tempArrayIndex [resultCounter] = i;
+    //   resultCounter++;
+    // }
+    // if ((temp2.find (temp1) == string::npos) && (thisArray [i] -> getISBN ().find (searchStr) == string::npos))
+    // {
+    //   counterNegative++;
+    // }
+  // }
+  //
+  // if (counterNegative == bookType::getBookCount ())
+  // {
+  //   cout << "ITEM NOT FOUND!" << endl
+  //        << endl;
+  //   system ("pause");
+  // }
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
-void addBook (string bookTitle [], string isbn [], string author [], string publisher [], string dateAdded [], int qtyOnHand [], double wholesale [], double retail [], int& bookCount)
+void addBook (unorderedLinkedList <bookType>* thisArray)
 {
   int userChoice = -1;
   int pos = 0;
@@ -178,25 +246,32 @@ void addBook (string bookTitle [], string isbn [], string author [], string publ
   double tempWholesale = 0;
   double tempRetail = 0;
 
-  if (bookCount >= 20)
-  {
-    cout << endl
-         << "*** ERROR: BOOK DATABASE FULL. CURRENT BOOK COUNT: " << bookCount << " ***" << endl
-         << endl
-         << "Please delete a book to add more items to database." << endl;
-    system ("pause");
-    return;
-  }
+  // *** IF RESTRICTED DATABASE SIZE *** //
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // if (bookType::getBookCount () >= 20)
+  // {
+  //   cout << endl
+  //        << "*** ERROR: BOOK DATABASE FULL. CURRENT BOOK COUNT: " << bookType::getBookCount () << " ***" << endl
+  //        << endl
+  //        << "Please delete a book to add more items to database." << endl;
+  //   system ("pause");
+  //   return;
+  // }
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   do
   {
     system ("CLS");
 
+    string dateTime = getDateStr () + " @ " + getTimeStr ();
+
     cout << "************************************************************************************" << endl
          << "*                             SERENDIPITY BOOKSELLERS                              *" << endl
-         << "*                                    MAIN MENU                                     *" << endl
+         << "*                                     ADD MENU                                     *" << endl
          << "*                                                                                  *" << endl
-         << "*                  DATABASE SIZE: " << setw (8) << left << DBSIZE << "CURRENT BOOK COUNT: " << setw (8) << bookCount << "             *" << endl
+         << "*                              " << dateTime << "                              *" << endl
+         << "*                                                                                  *" << endl
+         << "*                           CURRENT BOOK COUNT: " << setw (8) << thisArray -> length () << "                           *" << endl
          << "*                                                                                  *" << endl
          << "*                                                   --PENDING VALUES--             *" << endl
          << "*                                                                                  *" << endl
@@ -215,15 +290,8 @@ void addBook (string bookTitle [], string isbn [], string author [], string publ
          << "                                  CHOICE (0-9): ";
 
     cin >> userChoice;
-    while (cin.fail () || userChoice < 0 || userChoice > 9)
-    {
-      cout << "Please input correct OPTION: ";
-      cin.clear ();
-      cin.ignore ();
-      cin >> userChoice;
-    }
 
-    cout << endl;
+    isGoodChoice (userChoice, 0, 9);
 
     switch (userChoice)
     {
@@ -265,145 +333,154 @@ void addBook (string bookTitle [], string isbn [], string author [], string publ
         cin >> tempRetail;
         break;
       case 9:
-        bookTitle [bookCount] = tempBookTitle;
-        isbn [bookCount] = tempISBN;
-        author [bookCount] = tempAuthor;
-        publisher [bookCount] = tempPublisher;
-        dateAdded [bookCount] = tempDateAdded;
-        qtyOnHand [bookCount] = tempQtyOnHand;
-        wholesale [bookCount] = tempWholesale;
-        retail [bookCount] = tempRetail;
-        bookCount++;
+        bookType tempBookHolder (tempBookTitle, tempISBN, tempAuthor, tempPublisher, tempDateAdded, tempQtyOnHand, tempWholesale, tempRetail);
+        thisArray -> insertLast (tempBookHolder);
         break;
     }
 
   }
-  while ((userChoice != 0) && (bookCount != 20));
+  while (userChoice != 0);
   {
     return;
   }
+
+  // *** IF RESTRICTED DATABASE SIZE *** //
+  /////////////////////////////////////////////////////////////////////////////
+  // while ((userChoice != 0) && (bookType::getBookCount () != 20));
+  // {
+  //   return;
+  // }
+  /////////////////////////////////////////////////////////////////////////////
 }
 
-void bookEdit (string bookTitle [], string isbn [], string author [], string publisher [], string dateAdded [], int qtyOnHand [], double wholesale [], double retail [], int bookCount, int tempArrayIndexVal)
+void bookEdit (unorderedLinkedList <bookType>* thisArray)
 {
-  int userChoice = 0;
-  do
+  linkedListIterator <bookType> it;
+  bookType *tempBookHolder;
+
+  for (it = thisArray -> begin (); it != thisArray -> end (); ++it)
   {
-    system ("CLS");
-
-    int pos = 0;
-    int len = 35;
-
-    cout << "************************************************************************************" << endl
-         << "*                             SERENDIPITY BOOKSELLERS                              *" << endl
-         << "*                                    MAIN MENU                                     *" << endl
-         << "*                                                                                  *" << endl
-         << "*                 DATABASE SIZE: " << setw (8) << left << DBSIZE << "CURRENT BOOK COUNT: " << setw (8) << bookCount << "             *" << endl
-         << "*                                                                                  *" << endl
-         << "*                                                   --PENDING VALUES--             *" << endl
-         << "*                                                                                  *" << endl
-         << "*  <1> Enter Book Title              >  " << setw (43) << left << bookTitle [tempArrayIndexVal].substr (pos, len) << "*" << endl
-         << "*  <2> Enter ISBN                    >  " << setw (43) << isbn [tempArrayIndexVal] << "*" << endl
-         << "*  <3> Enter Author                  >  " << setw (43) << author [tempArrayIndexVal] << "*" << endl
-         << "*  <4> Enter Publisher               >  " << setw (43) << publisher [tempArrayIndexVal] << "*" << endl
-         << "*  <5> Enter Date Added (MM/DD/YYYY) >  " << setw (43) << dateAdded [tempArrayIndexVal] << "*" << endl
-         << "*  <6> Enter Quantity on Hand        >  " << setw (43) << qtyOnHand [tempArrayIndexVal] << "*" << endl
-         << "*  <7> Enter Wholesale Price         >  " << setw (43) << wholesale [tempArrayIndexVal] << "*" << endl
-         << "*  <8> Enter Retail Price            >  " << setw (43) << retail [tempArrayIndexVal] << "*" << endl
-         << "*  <9> Return to Previous Menu                                                     *" << endl
-         << "*                                                                                  *" << endl
-         << "************************************************************************************" << endl
-         << "                                  CHOICE (1-9): ";
-    cin >> userChoice;
-
-    switch (userChoice)
+    if ((*it).getSearchFlag () == true)
     {
-      case 1:
-        cout << "Enter Book Title: > ";
-        cin.ignore ();
-        getline (cin, bookTitle [tempArrayIndexVal]);
-        break;
-      case 2:
-        cout << "Enter ISBN : > ";
-        cin.ignore ();
-        getline (cin, isbn [tempArrayIndexVal]);
-        break;
-      case 3:
-        cout << "Enter Author: > ";
-        cin.ignore ();
-        getline (cin, author [tempArrayIndexVal]);
-        break;
-      case 4:
-        cout << "Enter Publisher: > ";
-        cin.ignore ();
-        getline (cin, publisher [tempArrayIndexVal]);
-        break;
-      case 5:
-        cout << "Enter Date Added: > ";
-        cin.ignore ();
-        getline (cin, dateAdded [tempArrayIndexVal]);
-        break;
-      case 6:
-        cout << "Enter quantity-on-hand: > ";
-        cin >> qtyOnHand [tempArrayIndexVal];
-        break;
-      case 7:
-        cout << "Enter wholesale price: > ";
-        cin >> wholesale [tempArrayIndexVal];
-        break;
-      case 8:
-        cout << "Enter retail price: > ";
-        cin >> retail [tempArrayIndexVal];
-        break;
-    }
-  }
-  while (userChoice != 9);
-  {
-    return;
-  }
-}
+      tempBookHolder = new bookType ((*it));
 
-void bookDelete (string bookTitle [], string isbn [], string author [], string publisher [], string dateAdded [], int qtyOnHand [], double wholesale [], double retail [], int& bookCount, int tempArrayIndexVal)
+      thisArray -> deleteNode ((*it));
+
+      int userChoice = 0;
+      string editTemp1;
+      int editTemp2 = 0;
+      double editTemp3 = 0;
+
+      do
+      {
+        system ("CLS");
+
+        int pos = 0;
+        int len = 35;
+        string dateTime = getDateStr () + " @ " + getTimeStr ();
+
+        cout << "************************************************************************************" << endl
+             << "*                             SERENDIPITY BOOKSELLERS                              *" << endl
+             << "*                                    EDIT MENU                                     *" << endl
+             << "*                                                                                  *" << endl
+             << "*                              " << dateTime << "                              *" << endl
+             << "*                                                                                  *" << endl
+             << "*                           CURRENT BOOK COUNT: " << setw (8) << thisArray -> length () << "                           *" << endl
+             << "*                                                                                  *" << endl
+             << "*                                                   --PENDING VALUES--             *" << endl
+             << "*                                                                                  *" << endl
+             << "*  <1> Enter Book Title              >  " << setw (43) << left << tempBookHolder -> getTitle ().substr (pos, len) << "*" << endl
+             << "*  <2> Enter ISBN                    >  " << setw (43) << tempBookHolder -> getISBN () << "*" << endl
+             << "*  <3> Enter Author                  >  " << setw (43) << tempBookHolder -> getAuthor () << "*" << endl
+             << "*  <4> Enter Publisher               >  " << setw (43) << tempBookHolder -> getPublisher () << "*" << endl
+             << "*  <5> Enter Date Added (MM/DD/YYYY) >  " << setw (43) << tempBookHolder -> getDateAdded () << "*" << endl
+             << "*  <6> Enter Quantity on Hand        >  " << setw (43) << tempBookHolder -> getQtyOnHand () << "*" << endl
+             << "*  <7> Enter Wholesale Price         >  " << setw (43) << tempBookHolder -> getWholesale () << "*" << endl
+             << "*  <8> Enter Retail Price            >  " << setw (43) << tempBookHolder -> getRetail () << "*" << endl
+             << "*  <9> Return to Previous Menu                                                     *" << endl
+             << "*                                                                                  *" << endl
+             << "************************************************************************************" << endl
+             << "                                  CHOICE (1-9): ";
+        cin >> userChoice;
+
+        isGoodChoice (userChoice, 1, 9);
+
+        switch (userChoice)
+        {
+          case 1:
+            cout << "Enter Book Title: > ";
+            cin.ignore ();
+            getline (cin, editTemp1);
+            tempBookHolder -> setTitle (editTemp1);
+            break;
+          case 2:
+            cout << "Enter ISBN : > ";
+            cin.ignore ();
+            getline (cin, editTemp1);
+            tempBookHolder -> setISBN (editTemp1);
+            break;
+          case 3:
+            cout << "Enter Author: > ";
+            cin.ignore ();
+            getline (cin, editTemp1);
+            tempBookHolder -> setAuthor (editTemp1);
+            break;
+          case 4:
+            cout << "Enter Publisher: > ";
+            cin.ignore ();
+            getline (cin, editTemp1);
+            tempBookHolder -> setPublisher (editTemp1);
+            break;
+          case 5:
+            cout << "Enter Date Added: > ";
+            cin.ignore ();
+            getline (cin, editTemp1);
+            tempBookHolder -> setDateAdded (editTemp1);
+            break;
+          case 6:
+            cout << "Enter quantity-on-hand: > ";
+            cin >> editTemp2;
+            tempBookHolder -> setQtyOnHand (editTemp2);
+            break;
+          case 7:
+            cout << "Enter wholesale price: > ";
+            cin >> editTemp3;
+            tempBookHolder -> setWholesale (editTemp3);
+            break;
+          case 8:
+            cout << "Enter retail price: > ";
+            cin >> editTemp3;
+            tempBookHolder -> setRetail (editTemp3);
+            break;
+        }
+      }
+      while (userChoice != 9);
+      {
+        tempBookHolder -> setSearchFlag (false);
+        thisArray -> insertLast (*tempBookHolder);
+        delete tempBookHolder;
+        return;
+      } // END OF DO-WHILE LOOP //
+    } // END OF IF SEARCH FLAG TRUE STATEMENT //
+  } // END OF ITERATING THROUGH LINKED LIST FOR LOOP //
+} // END OF BOOK EDIT FUNCTION //
+
+void bookDelete (unorderedLinkedList <bookType>* thisArray)
 {
-  for (int i = tempArrayIndexVal; i < (bookCount - 1); i++)
-  {
-    bookTitle [i] = bookTitle [i + 1];
-    isbn [i] = isbn [i + 1];
-    author [i] = author [i + 1];
-    publisher [i] = publisher [i + 1];
-    dateAdded [i] = dateAdded [i + 1];
-    qtyOnHand [i] = qtyOnHand [i + 1];
-    wholesale [i] = wholesale [i + 1];
-    retail [i] = retail [i + 1];
-  }
+  linkedListIterator <bookType> it;
 
-  bookCount--;
+  for (it = thisArray -> begin (); it != thisArray -> end (); ++it)
+    if ((*it).getSearchFlag () == true)
+      thisArray -> deleteNode ((*it));
+
   return;
 }
 
 string toLower (string variableStr)
 {
   for (int i = 0; i < variableStr.length (); i++)
-  {
     if ((variableStr [i] >= 'A') && (variableStr [i] <= 'Z'))
-    {
       variableStr [i] = variableStr [i] + 32;
-    }
-  }
 
   return variableStr;
 }
-
-// void printBookDB (string bookTitle [], string isbn [], string author [], string publisher [], string dateAdded [], int qtyOnHand [], double wholesale [], double retail [], int& bookCount)
-// {
-//   cout << bookCount << endl;
-//   cout << endl;
-//
-//   for (int i = 0; i < 20; i++)
-//   {
-//     cout << bookTitle [i] << endl
-//          << isbn [i] << endl
-//          << author [i] << endl
-//          << publisher [i] << endl;
-//   }
-// }
